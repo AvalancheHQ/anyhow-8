@@ -48,7 +48,8 @@ fn error_chain_iteration(bencher: divan::Bencher) {
     let base_error = io::Error::new(io::ErrorKind::NotFound, "file not found");
     let error = anyhow::Error::new(base_error)
         .context("Failed to read config")
-        .unwrap_err();
+        .err()
+        .unwrap();
     
     bencher.bench(|| {
         error.chain().count()
