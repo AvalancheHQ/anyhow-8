@@ -23,11 +23,16 @@ std = []
 backtrace = { version = "0.3.51", optional = true }
 
 [dev-dependencies]
+divan = { package = "codspeed-divan-compat", version = "4.3.0" }
 futures = { version = "0.3", default-features = false }
 rustversion = "1.0.6"
 syn = { version = "2.0", features = ["full"] }
 thiserror = "2"
 trybuild = { version = "1.0.108", features = ["diff"] }
+
+[[bench]]
+name = "error_creation"
+harness = false
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

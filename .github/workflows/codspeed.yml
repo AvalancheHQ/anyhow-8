@@ -1,0 +1,32 @@
+name: CodSpeed
+'on':
+  push:
+    branches:
+    - master
+  pull_request: null
+  workflow_dispatch: null
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  benchmarks:
+    name: Run benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+    - uses: actions/checkout@v6
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rust-src
+    - name: Install cargo-codspeed
+      uses: taiki-e/install-action@v2
+      with:
+        tool: cargo-codspeed
+    - name: Build the benchmark target(s)
+      run: cargo codspeed build
+    - name: Run the benchmarks
+      uses: CodSpeedHQ/action@v4
+      with:
+        upload-url: ${{ secrets.CODSPEED_FRANCOIS_DEV_UPLOAD_URL }}
+        mode: simulation
+        run: cargo codspeed run
