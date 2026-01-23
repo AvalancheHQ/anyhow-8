@@ -46,10 +46,8 @@ fn error_downcast() -> bool {
 fn error_chain_iteration(bencher: divan::Bencher) {
     use anyhow::Context;
     let base_error = io::Error::new(io::ErrorKind::NotFound, "file not found");
-    let error = anyhow::Error::new(base_error)
-        .context("Failed to read config")
-        .err()
-        .unwrap();
+    let result: Result<(), _> = Err(anyhow::Error::new(base_error));
+    let error = result.context("Failed to read config").unwrap_err();
     
     bencher.bench(|| {
         error.chain().count()
