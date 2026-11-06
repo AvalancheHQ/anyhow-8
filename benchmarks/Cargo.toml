@@ -1,0 +1,18 @@
+[package]
+name = "anyhow_benchmarks"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+anyhow = { path = ".." }
+
+[dev-dependencies]
+divan = { version = "6.0.0", package = "codspeed-divan-compat" }
+thiserror = "2"
+
+[[bench]]
+name = "error"
+harness = false
